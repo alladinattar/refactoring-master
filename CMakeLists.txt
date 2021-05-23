@@ -31,7 +31,16 @@ find_package(GTest CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+
+        include/log.hpp
+        sources/log.cpp
+        include/statSender.hpp
+        sources/statSender.cpp
+        include/pageContainer.hpp
+        sources/pageContainer.cpp
+        include/usedMemory.hpp
+        sources/usedMemory.cpp
+        include/structs.hpp
 )
 
 add_executable(demo
