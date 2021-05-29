@@ -1,10 +1,13 @@
-#include "log.hpp"
-#include "iostream"
+#include <log.hpp>
 
-void Log::Write(std::string_view message) const {
-  *out_ << message << std::endl;
+void log_t::write(std::string_view message) const {
+  *_output << message << '\n';
 }
 
-void Log::WriteDebug(std::string_view message) const {
-  if (level_ > 0) *out_ << message << std::endl;
+void log_t::write_debug(std::string_view message) const {
+  if (!_level) *_output << message << '\n';
+}
+log_t* log_t::get_instance() {
+  static log_t instance{};
+  return &instance;
 }

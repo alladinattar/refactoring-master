@@ -1,22 +1,27 @@
-#include "statSender.hpp"
+#include <statSender.hpp>
 
-void StatSender::OnLoaded(const std::vector<Item>& new_items) {
-  log_->WriteDebug("StatSender::OnDataLoad");
-
-  AsyncSend(new_items, "/items/loaded");
+void statSender::on_data_load(const std::vector<item>&,
+                               const std::vector<item>& new_items){
+  log_t::get_instance()->write_debug("stat_sender::on_loaded");
+  async_send(new_items, "/items/loaded");
+  log_t::get_instance()->write_debug("stat_sender::on_loaded");
 }
+void statSender::on_skipped(const item& item) {
+  log_t::get_instance()->write_debug("stat_sender::on_skipped");
+  async_send({item}, "/items/skipped");
+  log_t::get_instance()->write_debug("stat_sender::on_skipped");
+}
+void statSender::async_send(const std::vector<item>& items,
+                             std::string_view path) {
+  auto log = log_t::get_instance();
 
-void StatSender::Skip(const Item& item) { AsyncSend({item}, "/items/skiped"); }
+  log->write(path);
+  log->write("send stat " + std::to_string(items.size()));
 
-void StatSender::AsyncSend(const std::vector<Item>& items, std::string_view path) {
-  log_->Write(path);
-  log_->Write("send stat " + std::to_string(items.size()));
-
-  for (const auto& item : items) {
-    log_->WriteDebug("send: " + item.id);
+  for (auto const& item : items) {
+    log->write_debug("send: " + std::to_string(item.id));
     // ... some code
-    fstr << item.id << item.name << item.score;
-    fstr.flush();
+    _out_file << item.id << item.name << item.score;
+    _out_file.flush();
   }
 }
-

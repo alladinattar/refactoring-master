@@ -1,13 +1,21 @@
-#include "iostream"
-class Log {
+#ifndef INCLUDE_LOG_HPP_
+#define INCLUDE_LOG_HPP_
+
+#include <common.hpp>
+
+class log_t {
  public:
-  void Write(std::string_view message) const;
+  static log_t* getInstance();
+  void setLogLevel(size_t level) { level_ = level; }
 
-  void WriteDebug(std::string_view message) const;
-
-  explicit Log(size_t level) : level_(level) { out_ = &std::cout; }
+ public:
+  void write(std::string_view) const;
+  void write_debug(std::string_view) const;
 
  private:
+  log_t():output_{&std::cout}{}
   size_t level_ = 0;
-  mutable std::ostream* out_;
+  mutable std::ostream* output_;
 };
+
+#endif  // INCLUDE_LOG_HPP_
