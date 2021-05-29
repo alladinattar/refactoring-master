@@ -14,16 +14,16 @@ class statSender : public observer {
   virtual ~statSender() = default;
 
  public:
-  void on_data_load(const std::vector<item>&,
+  void onDataLoad(const std::vector<item>&,
                     const std::vector<item>& new_items) override;
-  void on_skipped(const item& item = {-1, "inc", -1}) override;
-  void on_raw_data_load(const std::vector<std::string>&,
+  void onSkipped(const item& item = {-1, "inc", -1}) override;
+  void onRawDataLoad(const std::vector<std::string>&,
                         const std::vector<std::string>&) override {}
 
  protected:
   virtual void async_send(const std::vector<item>&, std::string_view);
 
  private:
-  std::ofstream _out_file{"network", std::ios::binary};
+  std::ofstream outFile_{"network", std::ios::binary};
 };
 #endif  // INCLUDE_STAT_SENDER_HPP_

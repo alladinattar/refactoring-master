@@ -7,22 +7,22 @@
 #include <vector>
 #include <string>
 
-class used_memory : public observer {
+class usedMemory : public observer {
  public:
-  used_memory() = default;
-  ~used_memory() override = default;
+  usedMemory() = default;
+  ~usedMemory() override = default;
 
-  void on_data_load(const std::vector<item>&,
+  void onDataLoad(const std::vector<item>&,
                     const std::vector<item>&) override;
-  void on_raw_data_load(const std::vector<std::string>&,
+  void onRawDataLoad(const std::vector<std::string>&,
                         const std::vector<std::string>&) override;
-  void on_skipped(const item&) override {}
+  void onSkipped(const item&) override {}
 
  public:
-  [[nodiscard]] size_t used() const { return _used; }
-  void clear() { _used = 0; }
+  [[nodiscard]] size_t used() const { return used_; }
+  void clear() { used_ = 0; }
 
  private:
-  size_t _used = 0;
+  size_t used_ = 0;
 };
 #endif  // INCLUDE_USED_MEMORY_HPP_
