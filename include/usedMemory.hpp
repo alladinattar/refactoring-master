@@ -10,7 +10,9 @@
 class usedMemory : public observer {
  public:
   usedMemory() = default;
-  ~usedMemory() override = default;
+  virtual ~usedMemory(){
+    std::cout<<__LINE__;
+}
 
   void onDataLoad(const std::vector<item>&,
                     const std::vector<item>&) override;

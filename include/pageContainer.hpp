@@ -16,13 +16,13 @@
 template <class statSender_t = statSender>
 class pageContainer {
  public:
-  explicit pageContainer(used_memory* counter = new usedMemory(),
+  explicit pageContainer(usedMemory* counter = new usedMemory(),
                          statSender_t* sender = new statSender_t()) {
     attach(counter);
     attach(sender);
   }
   ~pageContainer() {
-    for (auto observer : observers_){
+    for (auto&& observer : observers_){
       delete observer;
     }
   }
@@ -30,7 +30,7 @@ class pageContainer {
   void attach(observer* observer) { observers_.emplace_back(observer); }
 
  public:
-  void load_raw_data(std::istream& is) {
+  void loadRawData(std::istream& is) {
     std::vector<std::string> rawData;
     auto log = log_t::getInstance();
 
@@ -104,7 +104,7 @@ class pageContainer {
     }
   }
 
-  [[nodiscard]] size_t data_size() const { return data_.size(); }
+  [[nodiscard]] size_t dataSize() const { return data_.size(); }
 
  private:
   std::vector<observer*> observers_;
